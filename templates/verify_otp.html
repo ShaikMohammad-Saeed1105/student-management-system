@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block title %}Verify Email - EduManager PRO{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="card border-0 shadow-sm custom-card">
+        <div class="card-body p-2">
+            <div class="text-center mb-4">
+                <span class="d-inline-flex p-3 rounded-circle bg-info-light text-info mb-2">
+                    <i class="bi bi-shield-fill-check fs-2"></i>
+                </span>
+                <h4 class="mb-1 text-dark">One-Time Password Verification</h4>
+                <p class="text-muted small">We've sent a 6-digit code to verify your supervisor inbox.</p>
+                <div class="text-center py-2 px-3 bg-light rounded text-dark fw-semibold border small mt-2">
+                    <i class="bi bi-envelope-open me-2 text-info"></i> {{ email }}
+                </div>
+            </div>
+
+            <!-- OTP Input Choice Form -->
+            <form action="{{ url_for('verify_otp') }}" method="POST" class="needs-validation" novalidate>
+                <!-- Carry Email context -->
+                <input type="hidden" name="email" value="{{ email }}">
+
+                <!-- OTP Input Field group -->
+                <div class="mb-4">
+                    <label for="otp_code" class="form-label text-center d-block">Enter 6-Digit Code</label>
+                    <input type="text" class="form-control text-center fs-3 fw-bold letter-spacing-lg mb-2" 
+                           id="otp_code" name="otp_code" 
+                           placeholder="0 0 0 0 0 0" 
+                           required 
+                           minlength="6" 
+                           maxlength="6" 
+                           pattern="\d{6}"
+                           autocomplete="one-time-code"
+                           style="letter-spacing: 0.25em;">
+                    <div class="invalid-feedback text-center">
+                        Please enter the correct 6-digit numeric pattern.
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary py-2"><i class="bi bi-patch-check-fill me-1"></i> Verify & Activate</button>
+                </div>
+            </form>
+
+            <hr class="my-4">
+
+            <div class="text-center small text-secondary">
+                Trouble finding the code? Check your spam/junk folder. 
+                <br>
+                For testing/mock runs, look in the <strong>VS Code Console output</strong> or the flashed alert!
+            </div>
+            
+            <div class="text-center mt-3 small">
+                <a href="{{ url_for('signup') }}" class="text-decoration-none"><i class="bi bi-arrow-left"></i> Change Email Settings</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

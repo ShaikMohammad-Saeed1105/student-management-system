@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+
+{% block title %}Database Connection Issue - EduManager PRO{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <div class="card border-0 shadow-lg custom-card">
+            <div class="card-body text-center py-5">
+                <div class="mb-4">
+                    <span class="d-inline-flex p-4 rounded-circle bg-danger-light text-danger mb-3">
+                        <i class="bi bi-database-fill-slash fs-1"></i>
+                    </span>
+                    <h2 class="text-danger mb-2">Database Connection Offline</h2>
+                    <p class="text-muted fs-5">We are having trouble connecting to your MySQL / Amazon RDS instance database.</p>
+                </div>
+
+                <div class="alert alert-warning text-start border-0 shadow-sm p-4 mb-4 aws-guide-card">
+                    <h5 class="alert-heading d-flex align-items-center mb-3">
+                        <i class="bi bi-exclamation-triangle-fill me-2 text-warning"></i>
+                        Connection Failure Details
+                    </h5>
+                    <p class="mb-2"><strong>Attempted Target Host:</strong> <code>{{ error_configs.host }}:{{ error_configs.port }}</code></p>
+                    <p class="mb-2"><strong>Attempted User:</strong> <code>{{ error_configs.user }}</code></p>
+                    <p class="mb-0"><strong>Error Logged:</strong> <code class="text-danger">{{ error_message }}</code></p>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="text-start">
+                    <h5 class="mb-3 text-secondary"><i class="bi bi-question-circle-fill me-2"></i>How to resolve this issue:</h5>
+                    
+                    <div class="accordion" id="troubleshootAccordion">
+                        
+                        <!-- Local Troubleshooting -->
+                        <div class="accordion-item border-0 border-bottom">
+                            <h2 class="accordion-header" id="headingLocal">
+                                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLocal" aria-expanded="false" aria-controls="collapseLocal">
+                                    1. Local Development Checks
+                                </button>
+                            </h2>
+                            <div id="collapseLocal" class="accordion-collapse collapse" aria-labelledby="headingLocal" data-bs-parent="#troubleshootAccordion">
+                                <div class="accordion-body text-muted small">
+                                    <ul>
+                                        <li class="mb-1">Ensure MySQL server is installed and running locally.</li>
+                                        <li class="mb-1">Verify that your credentials in <strong class="text-dark">config.py</strong> or <strong class="text-dark">.env</strong> match (Host, User, Password, Port).</li>
+                                        <li class="mb-1">Make sure you have created the database and schema:
+                                            <pre class="bg-light p-2 rounded mt-2"><code>mysql -u root -p < schema.sql</code></pre>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AWS RDS Setup -->
+                        <div class="accordion-item border-0 border-bottom">
+                            <h2 class="accordion-header" id="headingRDS">
+                                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRDS" aria-expanded="false" aria-controls="collapseRDS">
+                                    2. AWS RDS Configuration Checklist
+                                </button>
+                            </h2>
+                            <div id="collapseRDS" class="accordion-collapse collapse" aria-labelledby="headingRDS" data-bs-parent="#troubleshootAccordion">
+                                <div class="accordion-body text-muted small">
+                                    <ul>
+                                        <li class="mb-1"><strong>Security Groups:</strong> Ensure the RDS Security Group has an inbound rule permitting TCP port <code>3306</code> from your EC2 instance's IP or security group.</li>
+                                        <li class="mb-1"><strong>Public Accessibility:</strong> If connecting from outside AWS, verify that the RDS instance has "Publicly Accessible" enabled.</li>
+                                        <li class="mb-1"><strong>DB Subnet:</strong> Ensure route tables connect the DB subnet group to an internet gateway if accessing from external IPs.</li>
+                                        <li class="mb-1"><strong>Endpoint URL:</strong> Verify that <code>MYSQL_HOST</code> in environment variables is set to the RDS endpoint (e.g. <code>database-1.xxxx.us-east-1.rds.amazonaws.com</code>).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-2">
+                    <a href="/" class="btn btn-primary px-4"><i class="bi bi-arrow-clockwise me-1"></i> Try Reconnecting</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'layout.html' %}
+
+{% block title %}Registered Students - EduManager PRO{% endblock %}
+
+{% block content %}
+<!-- Search and Filters Section -->
+<div class="search-container mb-4">
+    <form action="{{ url_for('students') }}" method="GET" class="row g-3 align-items-center">
+        <div class="col-12 col-md-8 col-lg-9">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0 text-muted">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input type="text" name="q" value="{{ query or '' }}" class="form-control border-start-0 ps-0" placeholder="Search students by name, email, course, or department..." aria-label="Search students">
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" class="btn btn-primary flex-grow-1"><i class="bi bi-funnel-fill me-1"></i> Filter</button>
+            {% if query %}
+                <a href="{{ url_for('students') }}" class="btn btn-outline-secondary"><i class="bi bi-x-circle-fill"></i></a>
+            {% endif %}
+        </div>
+    </form>
+    {% if query %}
+        <div class="mt-2 text-muted small">
+            <i class="bi bi-info-circle me-1"></i> Showing results search matching: "<strong class="text-dark">{{ query }}</strong>"
+        </div>
+    {% endif %}
+</div>
+
+<!-- Students Listing Table Card -->
+<div class="card border-0 shadow-sm custom-card">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <div>
+            <h4 class="mb-1 text-dark">Registered Students</h4>
+            <p class="text-muted mb-0 small">Manage and review active student records</p>
+        </div>
+        <a href="{{ url_for('add_student') }}" class="btn btn-primary"><i class="bi bi-person-plus-fill me-1"></i> Register Student</a>
+    </div>
+
+    <!-- Table or Empty State Case -->
+    {% if students %}
+        <div class="table-responsive table-responsive-custom">
+            <table class="table table-hover table-custom align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 80px;">ID</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Email Address</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Course</th>
+                        <th scope="col">Department</th>
+                        <th scope="col" class="text-center" style="width: 150px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td class="fw-semibold">#{{ student.id }}</td>
+                            <td class="text-dark fw-medium">{{ student.full_name }}</td>
+                            <td>{{ student.email }}</td>
+                            <td>{{ student.phone }}</td>
+                            <td>
+                                <span class="badge badge-custom badge-course">{{ student.course }}</span>
+                            </td>
+                            <td>
+                                <span class="badge badge-custom badge-dept">{{ student.department }}</span>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a href="{{ url_for('edit_student', id=student.id) }}" class="btn btn-outline-primary btn-action" title="Edit Student">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-outline-danger btn-action" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#deleteConfirmModal" 
+                                            data-bs-id="{{ student.id }}" 
+                                            data-bs-name="{{ student.full_name }}" 
+                                            title="Delete Student">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <!-- Premium Empty State -->
+        <div class="text-center py-5">
+            <span class="d-inline-flex p-4 rounded-circle bg-light text-muted mb-3">
+                <i class="bi bi-shield-slash fs-1"></i>
+            </span>
+            {% if query %}
+                <h5 class="text-dark">No records match your query</h5>
+                <p class="text-muted mb-4">Try refining your search keyword or clearing the filters.</p>
+                <a href="{{ url_for('students') }}" class="btn btn-primary"><i class="bi bi-arrow-left"></i> See All Students</a>
+            {% else %}
+                <h5 class="text-dark">Student ledger is empty</h5>
+                <p class="text-muted mb-4">No records found. Setup is complete! Get started by adding your first student.</p>
+                <a href="{{ url_for('add_student') }}" class="btn btn-primary"><i class="bi bi-person-plus-fill me-1"></i> Add Student Now</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
+<!-- Modal: Global Delete Confirmation -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-content-custom shadow-lg">
+            <div class="modal-header modal-header-custom py-3">
+                <h5 class="modal-title d-flex align-items-center text-danger" id="deleteConfirmModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+                    Confirm Deletion
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-4">
+                <p class="mb-0 text-muted fs-6">
+                    Are you sure you want to permanently delete the student <strong class="text-dark" id="delete-student-name"></strong>?
+                </p>
+                <p class="text-danger small mt-2 mb-0"><i class="bi bi-info-circle me-1"></i> This action is irreversible and will remove all student history.</p>
+            </div>
+            <div class="modal-footer bg-light py-2 border-top-0 d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
+                <form id="delete-confirm-form" method="POST" action="" class="d-inline">
+                    <button type="submit" class="btn btn-danger btn-sm px-3"><i class="bi bi-trash3-fill me-1"></i> Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

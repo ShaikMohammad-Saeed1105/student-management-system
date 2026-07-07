@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+
+{% block title %}About - EduManager PRO{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-10 col-xl-8">
+        <!-- Main Card -->
+        <div class="card border-0 shadow-sm custom-card mb-4">
+            <div class="card-body p-2">
+                <div class="text-center mb-4">
+                    <span class="d-inline-flex p-3 rounded-circle bg-primary-light text-primary mb-2">
+                        <i class="bi bi-info-circle-fill fs-2"></i>
+                    </span>
+                    <h3 class="mb-1 text-dark fw-bold">About EduManager PRO</h3>
+                    <p class="text-muted small">Student Management System version 2.0.0</p>
+                </div>
+
+                <p class="text-muted mb-4 fs-6">
+                    EduManager PRO is a complete, production-ready curriculum and student directory supervisory ledger system. Created as a modern Flask MVC implementation, it integrates user authentication pipelines, verification mail alerts, student registry CRUD panels, and search configurations.
+                </p>
+
+                <h5 class="text-dark fw-bold mb-3"><i class="bi bi-check2-circle me-1 text-primary"></i> System Capabilities</h5>
+                <ul class="list-group list-group-flush mb-4 text-muted">
+                    <li class="list-group-item bg-transparent d-flex align-items-center py-3">
+                        <i class="bi bi-shield-fill-check text-success me-3 fs-5"></i>
+                        <div>
+                            <strong>Secure Session Authorization:</strong> Administrators register accounts protected by secure cryptography hashes (`pbkdf2:sha256` or `scrypt`).
+                        </div>
+                    </li>
+                    <li class="list-group-item bg-transparent d-flex align-items-center py-3">
+                        <i class="bi bi-envelope-at-fill text-success me-3 fs-5"></i>
+                        <div>
+                            <strong>Active OTP verification:</strong> Emails are validated during registration via a six-digit one-time password module.
+                        </div>
+                    </li>
+                    <li class="list-group-item bg-transparent d-flex align-items-center py-3">
+                        <i class="bi bi-file-earmark-medical-fill text-success me-3 fs-5"></i>
+                        <div>
+                            <strong>Automated Tuition Notices:</strong> Registers students and instantly delivers an automated tuition schedule mapping starting/ending days for their course program.
+                        </div>
+                    </li>
+                    <li class="list-group-item bg-transparent d-flex align-items-center py-3">
+                        <i class="bi bi-cloud-arrow-up-fill text-success me-3 fs-5"></i>
+                        <div>
+                            <strong>AWS Optimized Layout:</strong> Out-of-the-box configuration bindings for AWS EC2 platforms (Amazon Linux 2023) and Amazon RDS instances.
+                        </div>
+                    </li>
+                </ul>
+
+                <h5 class="text-dark fw-bold mb-3"><i class="bi bi-stack me-1 text-primary"></i> Technology Stack</h5>
+                <div class="row g-3 text-center mb-2">
+                    <div class="col-6 col-sm-3">
+                        <div class="p-3 bg-light border rounded">
+                            <i class="bi bi-code-slash text-danger fs-3 mb-1 d-block"></i>
+                            <span class="small fw-semibold text-dark">Python Flask 3</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <div class="p-3 bg-light border rounded">
+                            <i class="bi bi-database-fill text-primary fs-3 mb-1 d-block"></i>
+                            <span class="small fw-semibold text-dark">MySQL Server</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <div class="p-3 bg-light border rounded">
+                            <i class="bi bi-bootstrap-fill text-purple fs-3 mb-1 d-block" style="color: #6f42c1;"></i>
+                            <span class="small fw-semibold text-dark">Bootstrap 5</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <div class="p-3 bg-light border rounded">
+                            <i class="bi bi-braces-asterisk text-warning fs-3 mb-1 d-block"></i>
+                            <span class="small fw-semibold text-dark">Vanilla JS</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Back Link -->
+        <div class="text-center mt-3">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-primary px-4"><i class="bi bi-house-door me-1"></i> Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'layout.html' %}
+
+{% block title %}Edit Student Info - EduManager PRO{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-10 col-xl-8">
+        
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}" class="text-decoration-none"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Modify Student Profile</li>
+            </ol>
+        </nav>
+
+        <!-- Form Card Container -->
+        <div class="card border-0 shadow-sm custom-card">
+            <div class="card-header bg-transparent border-0 p-0 mb-4">
+                <h4 class="card-title mb-1 text-dark">Modify Student Record #{{ student.id }}</h4>
+                <p class="text-muted mb-0 small">Update the values below and save changes to apply updates permanently.</p>
+            </div>
+            
+            <div class="card-body p-0">
+                <form action="{{ url_for('edit_student', id=student.id) }}" method="POST" class="needs-validation" novalidate>
+                    
+                    <div class="row g-3">
+                        <!-- Full Name -->
+                        <div class="col-12 col-md-6">
+                            <label for="full_name" class="form-label">Full Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-person"></i></span>
+                                <input type="text" class="form-control border-start-0" id="full_name" name="full_name" value="{{ student.full_name }}" placeholder="John Doe" required minlength="2" maxlength="100">
+                                <div class="invalid-feedback">
+                                    Please enter a valid full name.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email Address -->
+                        <div class="col-12 col-md-6">
+                            <label for="email" class="form-label">Email Address</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-envelope"></i></span>
+                                <input type="email" class="form-control border-start-0" id="email" name="email" value="{{ student.email }}" placeholder="john.doe@example.com" required maxlength="100">
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="col-12 col-md-6">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-telephone"></i></span>
+                                <input type="text" class="form-control border-start-0" id="phone" name="phone" value="{{ student.phone }}" placeholder="+1-555-0199" required minlength="5" maxlength="20">
+                                <div class="invalid-feedback">
+                                    Please enter a valid phone number.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Selected Course Dropdown -->
+                        <div class="col-12 col-md-6">
+                            <label for="course" class="form-label">Course Program</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-journal-text"></i></span>
+                                <select class="form-select border-start-0" id="course" name="course" required>
+                                    <option value="" disabled>-- Choose Course --</option>
+                                    <option value="Computer Science" {% if student.course == 'Computer Science' %}selected{% endif %}>Computer Science</option>
+                                    <option value="Cyber Security" {% if student.course == 'Cyber Security' %}selected{% endif %}>Cyber Security</option>
+                                    <option value="Artificial Intelligence" {% if student.course == 'Artificial Intelligence' %}selected{% endif %}>Artificial Intelligence</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a course program from the list.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Selected Department Dropdown -->
+                        <div class="col-12">
+                            <label for="department" class="form-label">Department Organization</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-building"></i></span>
+                                <select class="form-select border-start-0" id="department" name="department" required>
+                                    <option value="" disabled>-- Choose Department --</option>
+                                    <option value="CSE" {% if student.department == 'CSE' %}selected{% endif %}>CSE</option>
+                                    <option value="CSE Cyber Security" {% if student.department == 'CSE Cyber Security' %}selected{% endif %}>CSE Cyber Security</option>
+                                    <option value="AI & ML" {% if student.department == 'AI & ML' %}selected{% endif %}>AI & ML</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please choose a department allocation.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Actions -->
+                    <div class="d-flex justify-content-end gap-3">
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary px-4"><i class="bi bi-x-circle me-1"></i> Cancel</a>
+                        <button type="submit" class="btn btn-primary px-4"><i class="bi bi-check-lg me-1"></i> Apply Changes</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

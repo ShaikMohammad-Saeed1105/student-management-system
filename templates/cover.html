@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+
+{% block title %}Welcome - EduManager PRO{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Hero Banner -->
+    <div class="hero-section mb-5">
+        <h1 class="hero-glow-text display-3 fw-bold mb-3">EduManager PRO</h1>
+        <p class="hero-subtitle fs-5">
+            Simplify administrative workflow, evaluate student enrollment registry lists, and dispatch curriculum notices using our cloud-ready school management console.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg px-4"><i class="bi bi-box-arrow-in-right me-2"></i> Access Console</a>
+            <a href="{{ url_for('signup') }}" class="btn btn-outline-primary btn-lg px-4"><i class="bi bi-user-plus me-2"></i> Register Account</a>
+        </div>
+    </div>
+
+    <!-- USP Features Grid -->
+    <div class="row g-4 justify-content-center py-4">
+        <!-- Feature 1 -->
+        <div class="col-12 col-md-4">
+            <div class="usp-card text-center">
+                <span class="usp-icon">
+                    <i class="bi bi-shield-fill-check"></i>
+                </span>
+                <h5>Secure Authorization</h5>
+                <p class="text-secondary small mb-0">
+                    Accounts are encapsulated in dynamic sessions, leveraging hash security and secure verification tokens.
+                </p>
+            </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="col-12 col-md-4">
+            <div class="usp-card text-center">
+                <span class="usp-icon">
+                    <i class="bi bi-envelope-check-fill"></i>
+                </span>
+                <h5>Active Verification</h5>
+                <p class="text-secondary small mb-0">
+                    Verify account holders with 6-digit OTP mail verification, and send real-time registration structures automatically.
+                </p>
+            </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="col-12 col-md-4">
+            <div class="usp-card text-center">
+                <span class="usp-icon">
+                    <i class="bi bi-cloud-check-fill"></i>
+                </span>
+                <h5>Cloud Deployable</h5>
+                <p class="text-secondary small mb-0">
+                    Fully compatible with Amazon Web Services EC2 compute nodes and Amazon RDS MySQL databases.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Seed Admin Hint (Dismissible banner for test ease) -->
+    <!-- <div class="alert alert-info border-0 shadow-sm mt-5 p-4 rounded-3 d-flex align-items-start" role="alert">
+        <i class="bi bi-info-circle-fill fs-4 me-3 text-info"></i>
+        <div>
+            <h6 class="alert-heading fw-bold mb-1">Developer Testing Credentials</h6>
+            <p class="mb-2 text-secondary small">
+                To test the console immediately without going through the signup and email verification flow, you can log in using our seeded administrator account:
+            </p>
+            <div class="mb-0">
+                <span class="badge bg-light text-dark border me-2">Username: <strong>admin</strong></span>
+                <span class="badge bg-light text-dark border">Password: <strong>admin123</strong></span>
+            </div>
+        </div>
+    </div> -->
+</div>
+{% endblock %}
